@@ -31,7 +31,7 @@ Space2 = currentSystem( currents )
 P = (2,0.5)
 
 ##Preguntas de test para Campo electrico y fuerza de coulomb
-Answer1 = Space1.MagneticFieldQuestion(P,R=5)
+Answer1 = Space1.MagneticFieldQuestion(P,R=4.5)
 Answer1.fig.savefig( 'P1 Campo Manetico.jpg',dpi = 1080 )
 plt.show()
 print( Answer1 ) 
@@ -39,7 +39,7 @@ file1 = open('P1 Campo Manetico.txt','w')
 file1.write( Answer1.__str__() )
 file1.close()
 
-Answer2 = Space2.MagneticForceQuestion(  currents[ randint( 0,len(currents)) ].id  ,R=5)
+Answer2 = Space2.MagneticForceQuestion(  currents[ randint( 0,len(currents)) ].id  ,R=4.5)
 Answer2.fig.savefig( 'P2 Fuerza Manetica.jpg',dpi = 1080 )
 plt.show()
 print( Answer2 ) 

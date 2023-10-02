@@ -6,14 +6,8 @@ Created on Fri Sep 22 17:00:02 2023
 @author: villabaal
 """
 from electric_mass.electric import _electricMass
-import itertools
+from utils import InstanceCounterMeta
 
-class InstanceCounterMeta(type):
-    """ Metaclass to make instance counter not share count with descendants
-    """
-    def __init__(cls, name, bases, attrs):
-        super().__init__(name, bases, attrs)
-        cls._ids = itertools.count(1)
 
 class InstanceCounter(object, metaclass=InstanceCounterMeta):
     """ Mixin to add automatic ID generation
@@ -23,7 +17,6 @@ class InstanceCounter(object, metaclass=InstanceCounterMeta):
     @property
     def id(self):
         return self._id
-        
 
 class electricCurrent(_electricMass,InstanceCounter):    
     """Obejto de Carga Eléctrica, crea un campo eléctrico y sufre de repulsión o atracción.\n
