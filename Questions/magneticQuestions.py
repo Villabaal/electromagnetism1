@@ -47,7 +47,7 @@ class currentSystem(Space):
         Bp = sum( [ current.B(P)  for current in self._m.values()] )
         for i,current in enumerate(self._m.values()):
             splot.arrow( *cmplx2tuple(current.position) , *cmplx2tuple(r[i]), 
-                head_width=0.05, head_length=0.25,
+                head_width=0.1, head_length=0.25,
                 color='purple',linestyle='--',length_includes_head = True)
             splot.arrow( *P , *cmplx2tuple( current.sign*1j*r[i]/abs( r[i] ) ) , 
                 head_width=0.15, head_length=0.3,
@@ -77,21 +77,23 @@ class currentSystem(Space):
         fig, splot = self._MagneticField( n, R )
         I = self._m[current_id]
         acting_currents = [ current for m_id,current in self._m.items() if m_id != current_id ]
-        r = [ I.position - current.position for current in acting_currents ]
+        r = [ current.position - I.position for current in acting_currents ]
         F = sum( [ I.F(current) for current in acting_currents] )
         for i,current in enumerate( acting_currents ):
-            splot.arrow( *cmplx2tuple(current.position) ,
-                *cmplx2tuple( r[i] ), head_width=0.05, head_length=0.25,
+            splot.arrow( *cmplx2tuple(I.position) ,
+                *cmplx2tuple( r[i] ), head_width=0.1, head_length=0.25,
                 color='purple',linestyle='--',length_includes_head = True)
             action = I.sign*current.sign
-            if action < 0: # se repelen el punto final sera la carga en cuestion
-                splot.arrow( *cmplx2tuple( I.position ) ,
+            if action > 0: # se atraen el punto final sera la carga en cuestion
+                splot.arrow( *cmplx2tuple( I.position - r[i]/abs( r[i] ) ) ,
                     *cmplx2tuple( r[i]/abs( r[i] ) ) , 
-                    head_width=0.15, head_length=0.3, color='#FF0000',length_includes_head = True)
-            elif action > 0: # se atraen el punto final sera la carga en cuestion
-                splot.arrow( *cmplx2tuple( I.position + r[i]/abs( r[i] ) ) ,
-                    *cmplx2tuple( -r[i]/abs( r[i] ) ) , 
                     head_width=0.15, head_length=0.3, color='#0000FF',length_includes_head = True)
+                
+            elif action < 0: # se repelen el punto inicial sera la carga en cuestion
+                splot.arrow( *cmplx2tuple( I.position ) ,
+                    *cmplx2tuple( -r[i]/abs( r[i] ) ) , 
+                    head_width=0.15, head_length=0.3, color='#FF0000',length_includes_head = True)
+                
         if  (len(acting_currents) > 1) and ( abs( F ) != 0 ) :
             splot.arrow( *cmplx2tuple( I.position ) ,
                     *cmplx2tuple( F/abs( F ) ) , 

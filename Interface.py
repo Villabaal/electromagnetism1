@@ -66,16 +66,16 @@ charges.append( electricCharge(-4.2e13*e, (-1, 2.5)) )
 charges_ = charges.copy()
 charges_.pop( randint( 0,len(charges_) ) )
 # Define el sistema en el plano bidimensional
-Space1 = chargeSystem( charges_ )
+Space3 = chargeSystem( charges_ )
 # Define el sistema en el plano bidimensional
-Space2 = chargeSystem( charges )
+Space4 = chargeSystem( charges )
 
 
 ## punto en cuestión para compo electrico
 P = (2,0.5)
 
 ##Preguntas de test para Campo electrico y fuerza de coulomb
-Answer1 = Space1.ElectricFieldQuestion(P,R=5)
+Answer1 = Space3.ElectricFieldQuestion(P,R=5)
 Answer1.fig.savefig( 'P1 Campo Eléctrico.jpg',dpi = 1080 )
 plt.show()
 print( Answer1 ) 
@@ -83,7 +83,7 @@ file1 = open('P1 Campo Eléctrico.txt','w')
 file1.write( Answer1.__str__() )
 file1.close()
 
-Answer2 = Space2.CoulombForceQuestion( charges[ randint( 0,len(charges)) ].id ,R=5)
+Answer2 = Space4.CoulombForceQuestion( charges[ randint( 0,len(charges)) ].id ,R=5)
 Answer2.fig.savefig( 'P2 Fuerza de Coulomb.jpg',dpi = 1080 )
 plt.show()
 print( Answer2 ) 

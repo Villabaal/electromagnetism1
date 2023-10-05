@@ -46,7 +46,7 @@ class chargeSystem(Space):
         r = [ tuple2cmplx( P ) - charge.position for _,charge in self._m.items() ]
         Ep = sum( [ charge.E(P)  for _,charge in self._m.items()] )
         for i,charge in enumerate( self._m.values() ):
-            splot.arrow( *cmplx2tuple(charge.position) , *cmplx2tuple(r[i]), head_width=0.05, head_length=0.25,
+            splot.arrow( *cmplx2tuple(charge.position) , *cmplx2tuple(r[i]), head_width=0.1, head_length=0.25,
                 color='purple',linestyle='--',length_includes_head = True)
             splot.arrow( *P , *cmplx2tuple( charge.sign*r[i]/abs( r[i] ) ) , head_width=0.15, head_length=0.3,
                 color=charge.color,length_includes_head = True)
@@ -77,7 +77,7 @@ class chargeSystem(Space):
         F = sum( [ q.F(charge) for charge in acting_charges] )
         for i,charge in enumerate( acting_charges ):
             splot.arrow( *cmplx2tuple(charge.position) ,
-                *cmplx2tuple( r[i] ), head_width=0.05, head_length=0.25,
+                *cmplx2tuple( r[i] ), head_width=0.1, head_length=0.25,
                 color='purple',linestyle='--',length_includes_head = True)
             action = q.sign*charge.sign
             if action < 0: # se atraen el punto final sera la carga en cuestion

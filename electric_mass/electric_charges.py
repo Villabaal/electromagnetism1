@@ -6,30 +6,25 @@ Created on Fri Sep 22 17:00:02 2023
 @author: villabaal
 """
 from electric_mass.electric import _electricMass
-from utils import InstanceCounterMeta
 
 
-class InstanceCounter(object, metaclass=InstanceCounterMeta):
-    """ Mixin to add automatic ID generation
-    """
-    def __init__(self):
-        self._id = next(self.__class__._ids)
-    @property
-    def id(self):
-        return self._id
-        
-class electricCharge(_electricMass, InstanceCounter):    
+class electricCharge(_electricMass):    
     """Obejto de Carga Eléctrica, crea un campo eléctrico y sufre de repulsión o atracción.\n
             toma:
                 - q : carga eléctrica (Coulombs)
                 - p : indexable de tamaño 2
-    """                
+    """
+    _instance = 0
     def __init__(self,q,p):
         _electricMass.__init__(self, q, p)
-        self._id = next(self.__class__._ids)
+        electricCharge._instance += 1
+        self._id = electricCharge._instance
         if self.q>0: self.color,self.sign = '#FF0000',1
         else: self.color,self.sign = '#0000FF',-1
         
+    @property
+    def id(self): return self._id
+    
     @property
     def q(self): return self._mass
     
