@@ -18,8 +18,8 @@ class currentSystem(Space):
         Space.__init__(self, Is,electricCurrent)
         
     #Genera una grafica de campo electrico y devuelve el objeto figura (grafica)
-    def _MagneticField(self, n, R):
-        fig,splot = Space._plot_field(self, n, R )
+    def _MagneticField(self, n, R ,P = None):
+        fig,splot = Space._plot_field(self, n, R, P)
         for current in self._m.values():
             splot.add_artist(Circle(cmplx2tuple(current.position), 0.1, color = 'gray' ))
             splot.plot( *cmplx2tuple(current.position),marker=current.marker,color='red' )
@@ -41,7 +41,7 @@ class currentSystem(Space):
         if any( [ not isReal( component ) for component in P ] ): 
             raise TypeError( "componentes deben ser numeros Reales" )
         self._check_window(n,R)     
-        fig, splot = self._MagneticField( n, R )
+        fig, splot = self._MagneticField( n, R, tuple2cmplx( P ) )
         r = [ tuple2cmplx( P ) - current.position for current in self._m.values() ]
         Bp = sum( [ current.B(P)  for current in self._m.values()] )
         for i,current in enumerate(self._m.values()):

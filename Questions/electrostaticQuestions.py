@@ -18,8 +18,8 @@ class chargeSystem(Space):
         Space.__init__(self, Q,electricCharge)
         
     #Genera una grafica de campo electrico y devuelve el objeto figura (grafica)
-    def _ElectricField(self, n, R):
-        fig,splot= Space._plot_field(self, n, R )
+    def _ElectricField(self, n, R, P = None):
+        fig,splot= Space._plot_field(self, n, R , P)
         for _,charge in self._m.items():
             splot.add_artist(Circle(cmplx2tuple(charge.position), 0.1, color = charge.color ))
         return fig,splot
@@ -41,7 +41,7 @@ class chargeSystem(Space):
         if any( [ not isReal( component ) for component in P ] ): 
             raise TypeError( "componentes deben ser numeros Reales" )
         self._check_window(n,R)     
-        fig, splot = self._ElectricField( n, R )
+        fig, splot = self._ElectricField( n, R , tuple2cmplx( P ) )
         r = [ tuple2cmplx( P ) - charge.position for charge in self._m.values() ]
         Ep = sum( [ charge.E(P)  for charge in self._m.values()] )
         for i,charge in enumerate( self._m.values() ):
@@ -72,7 +72,6 @@ class chargeSystem(Space):
         q = self._m[charge_id]
         acting_charges = [ charge for m_id,charge in self._m.items() if m_id != charge_id ]
         r = [ q.position - charge.position for charge in acting_charges ]
-        print(r)
         F = sum( [ q.F(charge) for charge in acting_charges] )
         for i,charge in enumerate( acting_charges ):
             splot.arrow( *cmplx2tuple(charge.position) ,

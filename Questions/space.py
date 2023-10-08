@@ -32,11 +32,14 @@ class Space:
         
     
     #Genera una grafica de campo electrico y devuelve el objeto figura (grafica)
-    def _plot_field(self, n, R):
+    def _plot_field(self, n, R, P = None):
         # encuadre de la grafica
         offsets = array( [ rect( R, (i*4+1)*pi/4 ) for i in range(2)] )
         # numero del centro de la grafica (promedio de los vectores de pocision)
-        massCenter = sum( [ mass.position for mass in self.masses.values()] )/len(self.masses)
+        if P is None:
+            massCenter = sum( [ mass.position for mass in self.masses.values()] )/len(self.masses)
+        else:
+            massCenter = sum( [ mass.position for mass in self.masses.values()] + [P] )/( len(self.masses) + 1 )
         limits = offsets + massCenter
         x = linspace( *sort(limits.real) , n )
         y = linspace( *sort(limits.imag) , n )
