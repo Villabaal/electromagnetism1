@@ -19,7 +19,7 @@ class MagneticFieldAnswer(problemAnswer):
         return degrees( phase( self._data['B'] ) )  
     def __str__ (self):
         problem_head = []
-        problem_head.append( 60*'*'+'\nDatos del Problema de Campo magnetico\n'+60*'*'+'\n' )
+        problem_head.append( 'Campo magnetico\n'+60*'*'+'\n' )
         problem_head.append( 'Corrientes(s):\n' )
         currents = self._data['currents']
         problem_head += [f'I{ i.id } = { i.I }A, posicionada en ({i.position.real},{i.position.imag}) m\n' 
@@ -48,7 +48,7 @@ class MagneticForceAnswer(problemAnswer):
     
     def __str__ (self):
         problem_head = []
-        problem_head.append( 60*'*'+'\nDatos del Problema de Fuerza de magnetica\n'+60*'*'+'\n' )
+        problem_head.append( 'Fuerza de magnetica\n'+60*'*'+'\n' )
         problem_head.append( 'Corriente pasiva:\n' )
         problem_head = ''.join( problem_head )
         i = self._data["passive_I"]

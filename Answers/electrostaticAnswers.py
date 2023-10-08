@@ -19,7 +19,7 @@ class EletricFieldAnswer(problemAnswer):
         return degrees( phase( self._data['E'] ) )  
     def __str__ (self):
         problem_head = []
-        problem_head.append( 60*'*'+'\nDatos del Problema de Campo electrico\n'+60*'*'+'\n' )
+        problem_head.append( 'Campo electrico\n'+60*'*'+'\n' )
         problem_head.append( 'Carga(s):\n' )
         charges = self._data['charges']
         problem_head += [f'q{ q.id } = { q.q }C, posicionada en ({q.position.real},{q.position.imag}) m\n' 
@@ -48,7 +48,7 @@ class CoulombForceAnswer(problemAnswer):
     
     def __str__ (self):
         problem_head = []
-        problem_head.append( 60*'*'+'\nDatos del Problema de Fuerza de Coulomb\n'+60*'*'+'\n' )
+        problem_head.append( 'Fuerza de Coulomb\n'+60*'*'+'\n' )
         problem_head.append( 'Carga pasiva:\n' )
         problem_head = ''.join( problem_head )
         q = self._data["passive_charge"]

@@ -1,12 +1,11 @@
 
-import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
 
 from electric_mass.electric_currents import electricCurrent
 from utils import cmplx2tuple,isReal,tuple2cmplx
+from Questions.space import Space
 from Answers.magneticAnswers import MagneticFieldAnswer,MagneticForceAnswer
 
-from Questions.space import Space
 
 
 # clase usada para graficar los problemas de fuerza de coulomb y campo eléctrico
@@ -20,7 +19,7 @@ class currentSystem(Space):
         
     #Genera una grafica de campo electrico y devuelve el objeto figura (grafica)
     def _MagneticField(self, n, R):
-        fig,splot= Space._plot_field(self, n, R )
+        fig,splot = Space._plot_field(self, n, R )
         for current in self._m.values():
             splot.add_artist(Circle(cmplx2tuple(current.position), 0.1, color = 'gray' ))
             splot.plot( *cmplx2tuple(current.position),marker=current.marker,color='red' )
@@ -38,7 +37,7 @@ class currentSystem(Space):
                     
         """            
         if not hasattr( P ,'__getitem__'): raise TypeError( "P no es subscriptable" )
-        if not ( len(P) == 2 ): raise TypeError( "len(P) no es 2" )
+        if not ( len(P) == 2 ): raise ValueError( "len(P) no es 2" )
         if any( [ not isReal( component ) for component in P ] ): 
             raise TypeError( "componentes deben ser numeros Reales" )
         self._check_window(n,R)     
@@ -57,7 +56,6 @@ class currentSystem(Space):
                 head_width=0.15, head_length=0.3,
                 color='darkred',length_includes_head = True)            
         splot.add_artist( Circle( P, 0.05, color = 'k') )
-        plt.show()
         return MagneticFieldAnswer( currents = self._m.values(), P = P ,
                                   fig = fig, splot = splot , B = Bp , r = r )
     

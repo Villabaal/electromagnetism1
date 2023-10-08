@@ -5,12 +5,12 @@ Spyder Editor
 This is a temporary script file.
 """
 
-###To do a GUI
 from numpy.random import randint
 from matplotlib import pyplot as plt
 from electric_mass.electric_currents import electricCurrent
 from Questions.magneticQuestions import currentSystem
 
+### To do interface grafica
 
 ##Definicion de las cargas electricas y sus posiciones
 currents = []
@@ -50,7 +50,6 @@ file2.close()
 
 
 
-from matplotlib import pyplot as plt
 from electric_mass.electric_charges import electricCharge
 from Questions.electrostaticQuestions import chargeSystem
 #carga del electron

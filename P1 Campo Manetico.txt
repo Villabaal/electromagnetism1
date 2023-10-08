@@ -1,5 +1,5 @@
 ************************************************************
-Datos del Problema de Campo magnetico
+Datos del Problema 1: Campo magnetico
 ************************************************************
 Corrientes(s):
 I1 = 40A, posicionada en (-1.0,-1.0) m

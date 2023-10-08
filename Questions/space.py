@@ -36,13 +36,13 @@ class Space:
         # encuadre de la grafica
         offsets = array( [ rect( R, (i*4+1)*pi/4 ) for i in range(2)] )
         # numero del centro de la grafica (promedio de los vectores de pocision)
-        massCenter = sum( [ mass.position for _,mass in self.masses.items()] )/len(self.masses)
+        massCenter = sum( [ mass.position for mass in self.masses.values()] )/len(self.masses)
         limits = offsets + massCenter
         x = linspace( *sort(limits.real) , n )
         y = linspace( *sort(limits.imag) , n )
         X, Y = meshgrid(x,y)
         Grid = (X,Y)
-        Field = sum( [ mass._field(Grid)  for _,mass in self.masses.items()] )
+        Field = sum( [ mass._field(Grid)  for mass in self.masses.values()] )
         fig, splot = plt.subplots()
         color = log10( abs(Field) )
         splot.streamplot(x,y,Field.real, Field.imag, color=color, 

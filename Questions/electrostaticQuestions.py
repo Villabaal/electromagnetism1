@@ -3,9 +3,8 @@ from matplotlib.patches import Circle
 
 from electric_mass.electric_charges import electricCharge
 from utils import cmplx2tuple,isReal,tuple2cmplx
-from Answers.electrostaticAnswers import EletricFieldAnswer,CoulombForceAnswer
-
 from Questions.space import Space
+from Answers.electrostaticAnswers import EletricFieldAnswer,CoulombForceAnswer
 
 
 
@@ -43,8 +42,8 @@ class chargeSystem(Space):
             raise TypeError( "componentes deben ser numeros Reales" )
         self._check_window(n,R)     
         fig, splot = self._ElectricField( n, R )
-        r = [ tuple2cmplx( P ) - charge.position for _,charge in self._m.items() ]
-        Ep = sum( [ charge.E(P)  for _,charge in self._m.items()] )
+        r = [ tuple2cmplx( P ) - charge.position for charge in self._m.values() ]
+        Ep = sum( [ charge.E(P)  for charge in self._m.values()] )
         for i,charge in enumerate( self._m.values() ):
             splot.arrow( *cmplx2tuple(charge.position) , *cmplx2tuple(r[i]), head_width=0.1, head_length=0.25,
                 color='purple',linestyle='--',length_includes_head = True)
