@@ -4,6 +4,8 @@ from numpy import array,linspace,meshgrid,sort,log10,pi
 from cmath import rect
 import matplotlib.pyplot as plt
 from utils import isReal
+import functools
+
 
 class Space:
     """Spacio bidimencional de cargas eléctricas estáticas.\n
@@ -29,30 +31,36 @@ class Space:
         if not isinstance(n,int) : raise TypeError( "n must be int" )
         if not isReal( R ) : raise TypeError( "R debe ser real" )
         if  ( R<=0 ): raise TypeError( "R debe ser positivo" ) 
-        
     
-    #Genera una grafica de campo electrico y devuelve el objeto figura (grafica)
-    def _plot_field(self, n, R, P = None):
-        # encuadre de la grafica
-        offsets = array( [ rect( R, (i*4+1)*pi/4 ) for i in range(2)] )
-        # numero del centro de la grafica (promedio de los vectores de pocision)
-        if P is None:
-            massCenter = sum( [ mass.position for mass in self.masses.values()] )/len(self.masses)
-        else:
-            massCenter = sum( [ mass.position for mass in self.masses.values()] + [P] )/( len(self.masses) + 1 )
-        limits = offsets + massCenter
-        x = linspace( *sort(limits.real) , n )
-        y = linspace( *sort(limits.imag) , n )
-        X, Y = meshgrid(x,y)
-        Grid = (X,Y)
-        Field = sum( [ mass._field(Grid)  for mass in self.masses.values()] )
-        fig, splot = plt.subplots()
-        color = log10( abs(Field) )
-        splot.streamplot(x,y,Field.real, Field.imag, color=color, 
-                         linewidth=0.5, cmap=plt.cm.inferno, density = 2,
-                         arrowstyle='->', arrowsize=1)
-        splot.set_xlabel( "x (meters)" )
-        splot.set_ylabel( "y (meters)" )
-        splot.axvline(0,color='k')
-        splot.axhline(0,color='k')
-        return fig,splot
+    def _plot_field_( field ):
+        @functools.wraps( field )
+        def wrapper_decorator(self, n, R, P = None):
+            # encuadre de la grafica
+            offsets = array( [ rect( R, (i*4+1)*pi/4 ) for i in range(2)] )
+            # numero del centro de la grafica (promedio de los vectores de pocision)
+            if P is None:
+                massCenter = sum( [ mass.position for mass in 
+                                   self.masses.values()] )/len(self.masses)
+            else:
+                massCenter = sum( [ mass.position for mass in 
+                                   self.masses.values()] + [P] )/( len(self.masses) + 1 )
+            limits = offsets + massCenter
+            x = linspace( *sort(limits.real) , n )
+            y = linspace( *sort(limits.imag) , n )
+            X, Y = meshgrid(x,y)
+            Grid = (X,Y)
+            Field = sum( [ mass._field(Grid)  for mass in self.masses.values()] )
+            fig, splot = plt.subplots()
+            color = log10( abs(Field) )
+            splot.streamplot(x,y,Field.real, Field.imag, color=color, 
+                             linewidth=0.5, cmap=plt.cm.inferno, density = 2,
+                             arrowstyle='->', arrowsize=1)
+            splot.set_xlabel( "x (meters)" )
+            splot.set_ylabel( "y (meters)" )
+            splot.axvline(0,color='k')
+            splot.axhline(0,color='k')
+            return field(self, fig, splot )
+            # Do something after
+        return wrapper_decorator
+    
+

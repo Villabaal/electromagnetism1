@@ -1,5 +1,5 @@
 ************************************************************
-Datos del Problema 1: Campo electrico
+Datos del Problema 3: Campo electrico
 ************************************************************
 Carga(s):
 q2 = 3.8452248e-06C, posicionada en (2.0,-1.0) m

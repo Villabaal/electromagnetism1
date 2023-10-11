@@ -17,13 +17,12 @@ class currentSystem(Space):
     def __init__(self, Is):
         Space.__init__(self, Is,electricCurrent)
         
-    #Genera una grafica de campo electrico y devuelve el objeto figura (grafica)
-    def _MagneticField(self, n, R ,P = None):
-        fig,splot = Space._plot_field(self, n, R, P)
+    @Space._plot_field_
+    def _MagneticField_(self, fig, splot ):
         for current in self._m.values():
             splot.add_artist(Circle(cmplx2tuple(current.position), 0.1, color = 'gray' ))
             splot.plot( *cmplx2tuple(current.position),marker=current.marker,color='red' )
-        return fig,splot
+        return fig,splot  
     
     #Coloca un punto sobre la grafica de campo electrico para generar un problema (ya solucionado)
     def MagneticFieldQuestion(self, P, n = 128, R = 5 ):
@@ -41,7 +40,7 @@ class currentSystem(Space):
         if any( [ not isReal( component ) for component in P ] ): 
             raise TypeError( "componentes deben ser numeros Reales" )
         self._check_window(n,R)     
-        fig, splot = self._MagneticField( n, R, tuple2cmplx( P ) )
+        fig, splot = self._MagneticField_( n, R, tuple2cmplx( P ) )
         r = [ tuple2cmplx( P ) - current.position for current in self._m.values() ]
         Bp = sum( [ current.B(P)  for current in self._m.values()] )
         for i,current in enumerate(self._m.values()):
@@ -72,7 +71,7 @@ class currentSystem(Space):
         """
         if not isinstance(current_id,int) : raise TypeError( "current_id must be int" )        
         self._check_window(n,R)
-        fig, splot = self._MagneticField( n, R )
+        fig, splot = self._MagneticField_( n, R )
         I = self._m[current_id]
         acting_currents = [ current for m_id,current in self._m.items() if m_id != current_id ]
         r = [ current.position - I.position for current in acting_currents ]

@@ -1,6 +1,6 @@
 
 from matplotlib.patches import Circle
-
+import functools
 from electric_mass.electric_charges import electricCharge
 from utils import cmplx2tuple,isReal,tuple2cmplx
 from Questions.space import Space
@@ -16,14 +16,13 @@ class chargeSystem(Space):
     """                    
     def __init__(self, Q):
         Space.__init__(self, Q,electricCharge)
-        
+    
     #Genera una grafica de campo electrico y devuelve el objeto figura (grafica)
-    def _ElectricField(self, n, R, P = None):
-        fig,splot= Space._plot_field(self, n, R , P)
-        for _,charge in self._m.items():
+    @Space._plot_field_
+    def _ElectricField_(self, fig, splot ):
+        for charge in self._m.values():
             splot.add_artist(Circle(cmplx2tuple(charge.position), 0.1, color = charge.color ))
         return fig,splot
-    
     
     #Coloca un punto sobre la grafica de campo electrico para generar un problema (ya solucionado)
     def ElectricFieldQuestion(self, P, n = 128, R = 5 ):
@@ -41,7 +40,7 @@ class chargeSystem(Space):
         if any( [ not isReal( component ) for component in P ] ): 
             raise TypeError( "componentes deben ser numeros Reales" )
         self._check_window(n,R)     
-        fig, splot = self._ElectricField( n, R , tuple2cmplx( P ) )
+        fig, splot = self._ElectricField_( n, R , tuple2cmplx( P ) )
         r = [ tuple2cmplx( P ) - charge.position for charge in self._m.values() ]
         Ep = sum( [ charge.E(P)  for charge in self._m.values()] )
         for i,charge in enumerate( self._m.values() ):
@@ -68,7 +67,7 @@ class chargeSystem(Space):
         """
         if not isinstance(charge_id,int) : raise TypeError( "charge_id must be int" )        
         self._check_window(n,R)
-        fig, splot = self._ElectricField( n, R )
+        fig, splot = self._ElectricField_( n, R )
         q = self._m[charge_id]
         acting_charges = [ charge for m_id,charge in self._m.items() if m_id != charge_id ]
         r = [ q.position - charge.position for charge in acting_charges ]
