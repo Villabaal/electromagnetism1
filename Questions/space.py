@@ -34,16 +34,15 @@ class Space:
     
     def _plot_field_( field ):
         @functools.wraps( field )
-        def wrapper_decorator(self, n, R, P = None):
-            # encuadre de la grafica
-            offsets = array( [ rect( R, (i*4+1)*pi/4 ) for i in range(2)] )
+        def wrapper_decorator(self, n, offset, P = None):
             # numero del centro de la grafica (promedio de los vectores de pocision)
-            if P is None:
-                massCenter = sum( [ mass.position for mass in 
-                                   self.masses.values()] )/len(self.masses)
-            else:
-                massCenter = sum( [ mass.position for mass in 
-                                   self.masses.values()] + [P] )/( len(self.masses) + 1 )
+            masses_positions = [ mass.position for mass in self.masses.values() ]
+            if P is not None:
+                masses_positions.append(P)
+            massCenter = sum( masses_positions )/len(masses_positions)
+            R = max( [ abs( position - massCenter ) for position in masses_positions ] ) + offset
+            # encuadre de la grafica
+            offsets = array( [ rect( R, (i*4+1)*pi/4 ) for i in range(2)] )                
             limits = offsets + massCenter
             x = linspace( *sort(limits.real) , n )
             y = linspace( *sort(limits.imag) , n )

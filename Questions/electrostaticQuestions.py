@@ -25,12 +25,12 @@ class chargeSystem(Space):
         return fig,splot
     
     #Coloca un punto sobre la grafica de campo electrico para generar un problema (ya solucionado)
-    def ElectricFieldQuestion(self, P, n = 128, R = 5 ):
+    def ElectricFieldQuestion(self, P, n = 128, R = 1 ):
         """Coloca un punto sobre la grafica de campo electrico para generar un problema (ya solucionado).\n
                 toma:
                     - P : indexable de tamaño 2
                     - n : numero de muestras de campo Eléctrico (para la gráfica)
-                    - R : 2R es el tamaño de pantalla de la gráfica\n
+                    - R : radio de pantalla mas R\n
                 regresa:
                     - Obejto EletricFieldAnswer (con la gráfica y datos principales)
                     
@@ -55,13 +55,13 @@ class chargeSystem(Space):
                                   fig = fig, splot = splot , E = Ep , r = r )
     
     #Elige una de las cargas por id (int) 1,2,3... y calcula la fuerza resultante
-    def CoulombForceQuestion(self, charge_id, n = 128, R = 5): 
+    def CoulombForceQuestion(self, charge_id, n = 128, R = 1): 
         """Elige una de las cargas por charge_id (int) 1,2,3... 
             y calcula la fuerza resultante que incide en ella \n
                 Toma:
                     - charge_id : el id de la carga en cuestión
                     - n : numero de muestras de campo Eléctrico (para la gráfica)
-                    - R : 2R es el tamaño de pantalla de la gráfica\n 
+                    - R : radio de pantalla mas R\n 
                     regresa:
                         - Obejto CoulombForceAnswer (con la gráfica y datos principales)
         """
