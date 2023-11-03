@@ -12,11 +12,14 @@ class MagneticFieldAnswer(problemAnswer):
     def B(self):
         return array( cmplx2tuple( self._data['B'] ) )
     @property
-    def B_magnitud(self):
-        return abs( self._data['B'] )  
-    @property    
-    def B_theta(self):
-        return degrees( phase( self._data['B'] ) )  
+    def B_mag(self):
+        return abs( self._data['B'] ) 
+    @property
+    def Bi(self):
+        return array( [  cmplx2tuple( _field ) for _field in self._data['Bi'] ] )
+    @property
+    def Bi_mag(self):
+        return array([ abs(B) for B in self._data['Bi'] ])     
     def __str__ (self):
         problem_head = []
         problem_head.append( 'Campo magnetico\n'+60*'*'+'\n' )
@@ -27,11 +30,18 @@ class MagneticFieldAnswer(problemAnswer):
         problem_head.append( f'Punto en cuestión:\nP: ({ self._data["P"][0] },{ self._data["P"][1] }) m\n' )
         answer_head  = 60*'*'+'\nRespuesta al Problema de Campo magnetico\n'+60*'*'+'\n'
         head = ''.join( problem_head ) + answer_head
+        
+        Bi_strings = []
+        Bi_strings.append( [ f'B{i+1} = {self.Bi[i]*1e6 } uT' for i in range( len(self.Bi) ) ] )
+        Bi_strings.append( [ f'|B{i+1}| = {self.Bi_mag[i]*1e6 } uT' for i in range( len(self.Bi) ) ] )
+        Bi_string = ''.join ( [ ''.join ( [ f'{ lst[i] }\n' for lst in Bi_strings ] )+'\n' 
+                    for i in range( len(self.r) ) ] )
+        
         B_strings = []
-        B_strings.append( f'B = { self.B } T\n' )
-        B_strings.append( f'B_magnitud = { self.B_magnitud } T\n' )
-        B_strings.append( f'B_theta = { self.B_theta }°\n'+60*'*'+'\n\n' )
-        return super().__str__( head,''.join( B_strings ) )    
+        B_strings.append( f'B = { self.B*1e6 } uT\n' )
+        B_strings.append( f'|B| = { self.B_mag*1e6 } uT\n' )
+        B_strings.append( 60*'*'+'\n\n' )
+        return super().__str__( head,Bi_string  + ''.join(B_strings) ) 
 
 class MagneticForceAnswer(problemAnswer):
     def __init__(self,**kargs):

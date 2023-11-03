@@ -42,7 +42,8 @@ class currentSystem(Space):
         self._check_window(n,R)     
         fig, splot = self._MagneticField_( n, R, tuple2cmplx( P ) )
         r = [ tuple2cmplx( P ) - current.position for current in self._m.values() ]
-        Bp = sum( [ current.B(P)  for current in self._m.values()] )
+        Bi =  [ current.B(P)  for current in self._m.values()]
+        Bp = sum( Bi )
         for i,current in enumerate(self._m.values()):
             splot.arrow( *cmplx2tuple(current.position) , *cmplx2tuple(r[i]), 
                 head_width=0.1, head_length=0.25,
@@ -56,7 +57,7 @@ class currentSystem(Space):
                 color='darkred',length_includes_head = True)            
         splot.add_artist( Circle( P, 0.05, color = 'k') )
         return MagneticFieldAnswer( currents = self._m.values(), P = P ,
-                                  fig = fig, splot = splot , B = Bp , r = r )
+                                  fig = fig, splot = splot, Bi = Bi , B = Bp , r = r )
     
     #Elige una de las cargas por id (int) 1,2,3... y calcula la fuerza resultante
     def MagneticForceQuestion(self, current_id, n = 128, R = 1): 

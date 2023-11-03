@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from utils import cmplx2tuple
-from numpy import array,degrees
-from cmath import phase
+from numpy import array
 
 
 
@@ -22,22 +21,14 @@ class problemAnswer:
     def r(self):
         return array( [  cmplx2tuple( ri ) for ri in self._data['r'] ] )
     @property
-    def distance(self):
-        return array([ abs(ri) for ri in self._data['r'] ])
-    @property
-    def r_theta(self):
-        return array([ degrees( phase( ri ) )  for ri in self._data['r'] ])
-    @property
-    def ru(self):
-        return array([  cmplx2tuple( ri/abs(ri) )  for ri in self._data['r'] ])
+    def r2(self):
+        return array([ abs(ri)**2 for ri in self._data['r'] ])
     
     def __str__ ( self, head, body ): #to do, str atribute to print
         start = 60*'*'+f'\nDatos del Problema {self.id}: ' 
         r_strings = []
         r_strings.append( [ f'r{i+1} = {self.r[i]} m' for i in range( len(self.r) ) ] )
-        r_strings.append( [ f'distance{i+1} = {self.distance[i] } m' for i in range( len(self.r) ) ] )
-        r_strings.append( [ f'theta{i+1} = {self.r_theta[i]}°' for i in range( len(self.r) ) ] )
-        r_strings.append( [ f'ru{i+1} = {self.ru[i]}' for i in range( len(self.r) ) ] )
+        r_strings.append( [ f'|r{i+1}|² = {self.r2[i]} m²' for i in range( len(self.r) ) ] )
         r_string = ''.join ( [ ''.join ( [ f'{ lst[i] }\n' for lst in r_strings ] )+'\n' 
                     for i in range( len(self.r) ) ] )
         return ''.join( [ start, head, r_string, body ] )
