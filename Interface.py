@@ -14,9 +14,9 @@ from Questions.magneticQuestions import currentSystem
 
 
 ### To do interface grafica
-for i in range(1):
+for i in range(5):
 ##Definicion de las cargas electricas y sus posiciones
-    currents = [ electricCurrent(round( uniform(-200,200), 3), randomPoint() ) for _ in range(2)]
+    currents = [ electricCurrent(round( uniform(-200,200), 2), randomPoint() ) for _ in range(2)]
     Space = currentSystem( currents )
     ## punto en cuestión para compo electrico
     P = randomPoint()

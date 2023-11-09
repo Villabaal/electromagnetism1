@@ -25,7 +25,7 @@ class Space:
         if not isinstance(masses,Iterable): raise TypeError( "Masas no es iterables" )
         if any( [ not isinstance(mass,self._type) for mass in masses ] ):
             raise TypeError( "uno o mas elemenos invalidos" )
-        self._m = { mass.id:mass for mass in masses }
+        self._m = { i+1:mass for i,mass in enumerate(masses) }
         
     def _check_window(self,n,R):
         if not isinstance(n,int) : raise TypeError( "n must be int" )

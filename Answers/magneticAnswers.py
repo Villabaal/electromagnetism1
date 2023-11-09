@@ -25,17 +25,13 @@ class MagneticFieldAnswer(problemAnswer):
         problem_head.append( 'Campo magnetico\n'+60*'*'+'\n' )
         problem_head.append( 'Corrientes(s):\n' )
         currents = self._data['currents']
-        problem_head += [f'I{ i.id } = { i.I }A, posicionada en ({i.position.real},{i.position.imag}) m\n' 
-                 for i in currents]
+        problem_head += [f'I{ i+1 } = { I.I }A, posicionada en ({I.position.real},{I.position.imag}) m\n' 
+                 for i,I in enumerate(currents)]
         problem_head.append( f'Punto en cuestión:\nP: ({ self._data["P"][0] },{ self._data["P"][1] }) m\n' )
         answer_head  = 60*'*'+'\nRespuesta al Problema de Campo magnetico\n'+60*'*'+'\n'
         head = ''.join( problem_head ) + answer_head
         
-        Bi_strings = []
-        Bi_strings.append( [ f'B{i+1} = {self.Bi[i]*1e6 } uT' for i in range( len(self.Bi) ) ] )
-        Bi_strings.append( [ f'|B{i+1}| = {self.Bi_mag[i]*1e6 } uT' for i in range( len(self.Bi) ) ] )
-        Bi_string = ''.join ( [ ''.join ( [ f'{ lst[i] }\n' for lst in Bi_strings ] )+'\n' 
-                    for i in range( len(self.r) ) ] )
+        Bi_string = ''.join ( [ f'B{i+1} = {self.Bi[i]*1e6 } uT\n\n' for i in range( len(self.Bi) ) ] )
         
         B_strings = []
         B_strings.append( f'B = { self.B*1e6 } uT\n' )

@@ -14,16 +14,10 @@ class electricCurrent(_electricMass):
                 - I : corriente eléctrica (Amperes)
                 - p : indexable de tamaño 2
     """                
-    _instance = 0
     def __init__(self,I,p):
         _electricMass.__init__(self, I, p)
-        electricCurrent._instance += 1
-        self._id = electricCurrent._instance
         if self.I < 0: self.marker,self.sign = 'x',-1
         else: self.marker,self.sign = '.',1
-        
-    @property
-    def id(self): return self._id
         
     @property
     def I(self): return self._mass
