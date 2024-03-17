@@ -11,7 +11,7 @@ Este generador de problemas permite a los usuarios especificar parámetros como 
 
 - **Interfaz Gráfica de Usuario Intuitiva**: La GUI proporciona una experiencia de usuario amigable, lo que facilita la interacción con el programa.
 
-- **Cálculo Automático de Resultados**: Una vez que se define el problema, el programa calcula automáticamente los resultados pertinentes y los presenta de manera clara y concisa, genera una grafica y un archivo .txt con los rseultados.
+- **Cálculo Automático de Resultados**: Una vez que se define el problema, el programa calcula automáticamente los resultados pertinentes y los presenta de manera clara y concisa, genera una grafica y un archivo .txt con los resultados.
 
 ![Ejemplo del Gui](images/gui.png)
 
