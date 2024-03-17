@@ -29,14 +29,14 @@ class EletricFieldAnswer(problemAnswer):
         problem_head += [f'q{ id+1 } = { q.q*1e6 } uC, posicionada en ({q.position.real},{q.position.imag}) m\n' 
                  for id,q in enumerate(charges)]
         problem_head.append( f'Punto en cuestión:\nP: ({ self._data["P"][0] },{ self._data["P"][1] }) m\n' )
-        answer_head  = 60*'*'+'\nRespuesta al Problema de Campo electrico\n'+60*'*'+'\n'
+        answer_head  = 60*'*'+'\nRespuesta al Problema de Campo eléctrico\n'+60*'*'+'\n'
         head = ''.join( problem_head ) + answer_head
         
         Ei_string = ''.join ( [ f'E{i+1} = {self.Ei[i] } V/m\n\n' for i in range( len(self.Ei) ) ] )
         
         E_strings = []
         E_strings.append( f'E = { self.E } V/m\n' )
-        E_strings.append( f'E_magnitud = { self.E_magnitud } V/m\n' )
+        E_strings.append( f'|E| = { self.E_magnitud } V/m\n' )
         E_strings.append( 60*'*'+'\n\n' )
         return super().__str__( head,Ei_string + ''.join( E_strings ) )    
 
@@ -63,7 +63,7 @@ class CoulombForceAnswer(problemAnswer):
         problem_head = ''.join( problem_head )
         Pid: int = self._data["passive_charge"][0]
         q: electricCharge = self._data["passive_charge"][1]
-        q_str = f'q{ Pid } = { q.q*1e6 }uC, posicionada en ({q.position.real},{q.position.imag}) m\n\n' 
+        q_str = f'q{ Pid } = { q.q*1e6 } uC, posicionada en ({q.position.real},{q.position.imag}) m\n\n' 
         active_q: dict[int,electricCharge] = self._data["acting_charges"]
         active_q_str = ['Carga(s) activa(s):\n']
         active_q_str += [f'q{id} = { qa.q*1e6 } uC, posicionada en ({qa.position.real},{qa.position.imag}) m\n' 
@@ -76,6 +76,6 @@ class CoulombForceAnswer(problemAnswer):
         
         F_strings = []
         F_strings.append( f'F = { self.F*1e6 } uN\n' )
-        F_strings.append( f'F_magnitud = { self.F_magnitud*1e6 } uN\n' )
+        F_strings.append( f'|F| = { self.F_magnitud*1e6 } uN\n' )
         F_strings.append( 60*'*'+'\n\n' )
         return super().__str__( head,Fi_string+''.join( F_strings ) )
