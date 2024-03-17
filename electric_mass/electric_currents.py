@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Fri Sep 22 17:00:02 2023
-
-@author: villabaal
-"""
 from electric_mass.electric import _electricMass
 
 
@@ -20,12 +15,12 @@ class electricCurrent(_electricMass):
         else: self.marker,self.sign = '.',1
         
     @property
-    def I(self): return self._mass
+    def I(self) -> float: return self._mass
     
-    def B(self,p): return self._field(p)
+    def B(self,p) : return self._field(p)
     
     ## campo electrico En un punto determinado creado por la particula self
-    def _field(self,p):
+    def _field(self,p) -> complex:
         r = self._calculate_r(p)
         return (4e-7)*self.I*r*1j/( 2*abs(r)**2 )
     

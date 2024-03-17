@@ -1,31 +1,26 @@
 # -*- coding: utf-8 -*-
 from utils import cmplx2tuple
-from numpy import array
+from numpy import array,ndarray
+from matplotlib.figure import Figure
 
 
 
 class problemAnswer:
-    _instance_n = 0
     def __init__(self,data):
         self._data = data
-        problemAnswer._instance_n += 1
-        self.id = problemAnswer._instance_n
             
     @property
-    def fig(self):
+    def fig(self) -> Figure:
         return self._data['fig']
     @property
-    def splot(self):
-        return self._data['splot']    
-    @property
-    def r(self):
+    def r(self) -> ndarray:
         return array( [  cmplx2tuple( ri ) for ri in self._data['r'] ] )
     @property
-    def r2(self):
+    def r2(self) -> ndarray:
         return array([ abs(ri)**2 for ri in self._data['r'] ])
     
-    def __str__ ( self, head, body ): #to do, str atribute to print
-        start = 60*'*'+f'\nDatos del Problema {self.id}: ' 
+    def __str__ ( self, head: str, body: str )->str: #to do, str atribute to print
+        start = 60*'*'+f'\nDatos del Problema: ' 
         r_strings = []
         r_strings.append( [ f'r{i+1} = {self.r[i]} m' for i in range( len(self.r) ) ] )
         r_strings.append( [ f'|r{i+1}|² = {self.r2[i]} m²' for i in range( len(self.r) ) ] )
