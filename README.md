@@ -5,7 +5,7 @@ En el mundo de la enseñanza de la física, especialmente en áreas como la elec
 
 ## Descripción
 
-Este generador de problemas permite a los usuarios especificar parámetros como la distribución de carga, las condiciones de contorno y la geometría del sistema para crear problemas de campo eléctrico personalizados. Además, proporciona la capacidad de calcular y mostrar resultados relevantes, como la intensidad del campo eléctrico, el potencial eléctrico y la energía eléctrica asociada.
+Este generador de problemas permite a los usuarios especificar parámetros como las cargas o corrientes eléctricas y la geometría del sistema para crear problemas de campo eléctrico personalizados.
 
 ## Características
 
